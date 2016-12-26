@@ -1,0 +1,647 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Sergey Pozhilov (GetTemplate.com)">
+
+<title>E-Voting System</title>
+
+<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+
+<link rel="stylesheet" media="screen"
+	href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
+<!-- Custom styles for our template -->
+<link rel="stylesheet" href="assets/css/bootstrap-theme.css"
+	media="screen">
+<link rel="stylesheet" href="assets/css/main.css">
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+	<script src="assets/js/html5shiv.js"></script>
+	<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top headroom">
+		<div class="container">
+			<div class="navbar-header">
+				<!-- Button for smallest screens -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">E-Voting System</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav pull-right">
+					<li class="active"><a class="btn" href="updateOfficerProfile.html">Update Profile</a></li>
+					<li class="active"><a class="btn" href="javascript:AlertIt()">Sign
+							out</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+	<!-- /.navbar -->
+
+	<header id="head" class="secondary"></header>
+
+	<!-- container -->
+	<div class="container">
+
+		<ol class="breadcrumb">
+
+		</ol>
+
+		<div class="row">
+
+			<!-- Article main content -->
+			<article class="col-xs-12 maincontent">
+				<header class="page-header">
+					<h1 class="page-title">
+						Welcome, Election Officer
+						<?=$_SESSION['sess_user'];?>
+						!
+					</h1>
+				</header>
+
+
+
+				<div class="col"></div>
+
+				<div class="container">
+					<h3>Menu</h3>
+					<p>
+						What do you want to do today <a href="changePWD.html" id="popup">Update
+							your password?</a>
+					</p>
+
+
+
+
+					<div class="col col-md-6 col-md-offset-0 col-sm-8 col-sm-offset-1">
+
+
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#createBallot">Create
+									Ballot</button>
+
+								<form class="collapse" id='createBallot'
+									action="CreateBallotServlet" method="post">
+									<div class="top-margin">
+										<label for="chooseDistrict">Ballot<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseDistrict" name="chooseDistrict">
+											<option selected disabled>Choose District</option>
+										</select>
+									</div>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>Start Date<span class="text-danger">*</span></label> <input
+												type="text" class="form-control" placeholder="MM/DD/YYYY"
+												name="startDate">
+										</div>
+									</div>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>End Date<span class="text-danger">*</span></label> <input
+												type="text" class="form-control" placeholder="MM/DD/YYYY"
+												name="endDate">
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="col-lg-8"></div>
+										<div class="row">
+											<div class="col-lg-4 text-right">
+												<hr>
+												<input class="btn btn-action" type="Submit" value="Create">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#updateBallot">
+									Update Ballot</button>
+
+								<form class="collapse" id='updateBallot'
+									action="UpdateBallotServlet" method="post">
+									<div class="top-margin">
+										<label for="chooseBallot">Ballot<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseBallot" name="chooseBallot">
+											<option selected disabled>Choose Ballot</option>
+										</select>
+									</div>
+
+									<div class="top-margin">
+										<label>New Start Date<span class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="new_start_date"
+											id="new_start_date">
+									</div>
+
+									<div class="top-margin">
+										<label>New End Date<span class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="new_end_date"
+											id="new_end_date">
+									</div>
+
+									<div class="row">
+										<div class="col-lg-8"></div>
+										<div class="row">
+											<div class="col-lg-4 text-right">
+												<hr>
+												<input class="btn btn-action" type="Submit" value="Update">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#editOpen">Open/Close
+									Ballot</button>
+
+								<form class="collapse" id='editOpen' action="UpdateOpenServlet"
+									method="post">
+									<div class="top-margin">
+										<label for="chooseBallotForOpen">Open/Close Ballot<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseBallotForOpen" name="chooseBallotForOpen">
+											<option selected disabled>Choose Ballot</option>
+										</select>
+									</div>
+									<div class="top-margin">
+										<label for="openValue"> Open/Close <span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="openValue" name="openValue">
+											<option>Open</option>
+											<option>Close</option>
+										</select>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Update">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#createDistrict">Create
+									New Electoral District</button>
+
+								<form class="collapse" id='createDistrict'
+									action="CreateDistrictServlet" method="post">
+
+									<div class="top-margin">
+										<label>Electoral District Name<span
+											class="text-danger">*</span></label> <input type="text"
+											class="form-control" name="district_name" id="district_name">
+									</div>
+
+									<div class="row">
+										<div class="col-lg-8"></div>
+										<div class="row">
+											<div class="col-lg-4 text-right">
+												<hr>
+												<input class="btn btn-action" type="Submit" value="Create">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#editDistrict">Edit
+									Electoral District</button>
+
+								<form class="collapse" id='editDistrict'
+									action="UpdateDistrictServlet" method="post">
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>Old District Name<span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="oldDistrict">
+										</div>
+									</div>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>New District Name<span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="newDistrict">
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Update">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#createelection">Create
+									New Election</button>
+
+								<form class="collapse" id='createelection'
+									action="CreateElectionServlet" method="post">
+									<div id='candidates'>
+										<div class="form-group">
+											<div class="top-margin">
+												<label for="chooseBallotForElection">Ballot<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="chooseBallotForElection" name="chooseBallotForElection">
+													<option selected disabled>Choose Ballot</option>
+												</select>
+											</div>
+											<br>
+											<div class="top-margin">
+												<label>Election Name<span class="text-danger">*</span></label>
+												<input type="text" class="form-control" name="electionname">
+											</div>
+											<div class="top-margin">
+												<input type="radio" name="isPartisan" value="true"><label>Election
+													is Partisan</label><br> <input type="radio" name="isPartisan"
+													value="false"><label>Election is NOT
+													Partisan</label><br>
+											</div>
+										</div>
+										<button type="button" class="btn btn-info"
+											onClick="javascript:add();">Add Candidate</button>
+										<br> <br>
+
+									</div>
+
+									<div class="row">
+										<div class="col-lg-8"></div>
+										<div class="row">
+											<div class="col-lg-4 text-right">
+												<hr>
+												<input class="btn btn-action" type="Submit" value="Create">
+											</div>
+										</div>
+										<div>
+											<input type="text" name="officerid"
+												value="<?php echo htmlspecialchars($officerid); ?>"
+												hidden="true">
+										</div>
+									</div>
+
+
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#editelection">Edit
+									Election</button>
+
+								<form class="collapse" id='editelection'
+									action="UpdateElectionServlet" method="post">
+									<div class="top-margin">
+										<label for="chooseElection">Election<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseElection" name="chooseElection">
+											<option selected disabled>Choose Election</option>
+										</select>
+									</div>
+									<br>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>New Election Name<span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="newElection">
+										</div>
+									</div>
+									<br> <br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Update">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#createissue">Create
+									New Issue</button>
+
+								<form class="collapse" id='createissue'
+									action="CreateIssueServlet" method="post">
+									<div class="top-margin">
+										<label for="chooseBallotForIssue">Ballot<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseBallotForIssue" name="chooseBallotForIssue">
+											<option selected disabled>Choose Ballot</option>
+										</select>
+									</div>
+									<br>
+									<div class="top-margin">
+										<label>Issue Name<span class="text-danger">*</span></label> <input
+											type="text" class="form-control" name="issuename">
+									</div>
+
+									<div class="row">
+										<div class="col-lg-8"></div>
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Create">
+
+										</div>
+									</div>
+								
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#editissue">Edit
+									Issue</button>
+
+								<form class="collapse" id='editissue'
+									action="UpdateIssueServlet" method="post">
+									<div class="top-margin">
+										<label for="chooseIssue">Issue<span
+											class="text-danger">*</span></label> <select class="form-control"
+											id="chooseIssue" name="chooseIssue">
+											<option selected disabled>Choose Issue</option>
+										</select>
+									</div>
+									<br>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>New Issue Name<span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="newIssue">
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Update">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#search">Search</button>
+
+								<form class="collapse" id='search' action="SearchServlet"
+									method="post">
+									<div class="top-margin">
+										<select class="form-control" id="searchType" name="searchType">
+											<option>Electoral Districts</option>
+											<option>Elections</option>
+											<option>Candidates</option>
+											<option>Political Parties</option>
+											<option>Issues</option>
+											<option>Ballots</option>
+										</select>
+									</div>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>Search For: <span class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="searchKeyword"
+												placeholder="Name of Object to Search for">
+										</div>
+									</div>
+									<br> <br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Search">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#delete">Delete</button>
+
+								<form class="collapse" id='delete' action="DeleteServlet"
+									method="post">
+									<div class="top-margin">
+										<select class="form-control" id="deleteType" name="deleteType">
+											<option>Electoral Districts</option>
+											<option>Elections</option>
+											<option>Candidates</option>
+											<option>Political Parties</option>
+											<option>Issues</option>
+											<option>Ballots</option>
+										</select>
+									</div>
+									<div class="top-margin">
+										<div class="col-sm-6">
+											<label>ID: <span class="text-danger">*</span></label> <input
+												type="text" class="form-control" name="deleteName"
+												placeholder="ID of Object to Delete">
+										</div>
+									</div>
+									<br> <br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="button"
+												onclick="confirmDelete()" value="Delete"> <input
+												class="btn btn-action" type="Submit" value="Delete"
+												style="display: none;" id="deleteConfirm">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-info"
+									data-toggle="collapse" data-target="#prove">Prove Ballots</button>
+
+								<form class="collapse" id='prove' action="ProveBallotServlet"
+									method="post">
+									<div class="top-margin">
+												<label for="chooseBallotForProve">Ballot<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="chooseBallotForProve" name="chooseBallotForProve">
+													<option selected disabled>Choose Ballot</option>
+												</select>
+									</div>
+									<br> <br>
+									<div class="row">
+										<div class="col-lg-4 text-right">
+											<hr>
+											<input class="btn btn-action" type="Submit" value="Verify">
+										</div>
+									</div>
+									
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</article>
+		</div>
+	</div>
+
+
+	<footer id="footer" class="top-space">
+
+		<div class="footer2">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="simplenav"></p>
+						</div>
+					</div>
+
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="text-right">
+								Copyright &copy; 2016, Hongji Wang. Designed by <a
+									href="http://gettemplate.com/" rel="designer">gettemplate</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+				<!-- /row of widgets -->
+			</div>
+		</div>
+
+	</footer>
+
+
+
+
+
+
+	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script
+		src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="assets/js/headroom.min.js"></script>
+	<script src="assets/js/jQuery.headroom.min.js"></script>
+	<script src="assets/js/template.js"></script>
+	<script type="text/javascript">
+    	function confirmDelete() {
+    		var r = confirm("Are you sure you want to delete this object?");
+    	    if (r == true) {
+    	        document.getElementById("deleteConfirm").click();
+    	    }
+    	}
+    
+        function AlertIt() {
+            var answer = confirm ("Are you sure you want to log out?")
+            if (answer){
+                alert("You have logged out successfully!");
+                window.location="LogoutServlet";
+            }
+            
+        }
+        
+        function Create() {
+            var answer = confirm ("Are you sure you want to Create this form?")
+            if( answer ){
+                alert("The form has been created successfully!");
+            }
+        }
+        
+        function add(){
+        	var count = incr();
+        	var candidateList = document.getElementById('candidates');
+        	var newCandidate = document.createElement('input');
+        	var newCandidateLabel = document.createElement('label');
+        	var newParty = document.createElement('input');
+        	var newPartyLabel = document.createElement('label');
+        	
+        	newCandidateLabel.innerHTML = "Candidate " + count;
+        	newPartyLabel.innerHTML = "Candidate " + count +"\'s Political Party";
+        	
+        	newCandidate.setAttribute("type", "text");
+        	newCandidate.setAttribute("class", "form-control");
+        	newCandidate.setAttribute("name", "candidate" + count);
+        	newCandidate.setAttribute("id", "candidate" + count);
+        	newParty.setAttribute("type", "text");
+        	newParty.setAttribute("class", "form-control");
+        	newParty.setAttribute("name", "party" + count);
+        	newParty.setAttribute("id", "party" + count)
+        	candidateList.appendChild(newCandidateLabel);
+        	candidateList.appendChild(newCandidate);
+        	candidateList.appendChild(newPartyLabel);
+        	candidateList.appendChild(newParty);
+        }
+        
+        var incr = (function () {
+            var i = 1;
+
+            return function () {
+                return i++;
+            }
+        })();
+        
+      
+    </script>
+	<script src="DisplayElectionServlet"></script>
+	<script src="DisplayIssueServlet"></script>
+	<script src="DisplayBallotForElectionServlet"></script>
+	<script src="DisplayBallotForIssueServlet"></script>
+	<script src="DisplayDistrictServlet"></script>
+	<script src="DisplayBallotServlet"></script>
+	<script src="DisplayBallotForOpenServlet"></script>
+	<script src="DisplayBallotForProveServlet"></script>
+</body>
+</html>
+
+
